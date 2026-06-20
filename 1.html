@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Полноэкранное фото со звуком</title>
+    <style>
+        /* Базовые настройки экрана */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+            font-family: sans-serif;
+        }
+
+        /* Серый экран с кнопкой */
+        .start-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #333; /* Серый фон */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            transition: opacity 0.5s ease; /* Плавное исчезновение */
+        }
+
+        /* Стиль кнопки */
+        .start-btn {
+            padding: 20px 40px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #555;
+            border: 2px solid #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .start-btn:hover {
+            background-color: #777;
+        }
+
+        /* Полноэкранное фото (изначально скрыто под серым экраном) */
+        .fullscreen-bg {
+            width: 100%;
+            height: 100%;
+            background-image: url('1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Стартовый серый экран -->
+    <div class="start-screen" id="startScreen">
+        <button class="start-btn" id="startBtn">НАЖМИ</button>
+    </div>
+
+    <!-- Фоновое изображение -->
+    <div class="fullscreen-bg"></div>
+
+    <!-- Аудиоэлемент -->
+    <audio id="myAudio" src="1.mp3" loop></audio>
+
+    <script>
+        const startScreen = document.getElementById('startScreen');
+        const startBtn = document.getElementById('startBtn');
+        const audio = document.getElementById('myAudio');
+
+        // Обработчик клика по кнопке
+        startBtn.addEventListener('click', () => {
+            // 1. Запускаем звук
+            audio.play().catch(error => {
+                console.error("Ошибка воспроизведения:", error);
+            });
+
+            // 2. Плавно скрываем серый экран
+            startScreen.style.opacity = '0';
+            
+            // 3. Полностью удаляем серый экран через 0.5 сек, чтобы показать фото
+            setTimeout(() => {
+                startScreen.style.display = 'none';
+            }, 500);
+        });
+    </script>
+
+</body>
+</html>
